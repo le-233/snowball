@@ -1,16 +1,8 @@
 using UnityEngine;
-using TMPro;
 public class star : MonoBehaviour
 {
     public float rotationSpeed = 90f;
     public int points = 1;
-    public static int totalScore = 0;
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    static void ResetScore()
-    {
-        totalScore = 0;
-    }
-    public TMP_Text scoreText;
     private bool collected = false;
 
     void Update()
@@ -22,17 +14,8 @@ public class star : MonoBehaviour
         if (other.CompareTag("Player") ||other.transform.root.CompareTag("Player"))
         {
             collected = true;
-            totalScore += points;
-            Debug.Log("Score: " + totalScore);
+            ScoreManager.Instance.AddScore(points);
             Destroy(gameObject);
-            UpdateScoreText();
         }
-    }
-    void UpdateScoreText()
-    {
-        if (scoreText != null)
-        {
-            scoreText.text = "Score: " + totalScore;
-            }
     }
 }
